@@ -8,18 +8,16 @@ This pipline facilitates automatic processing of auditory data, especially the c
 
 However, it could be used for processing of other kinds of data.
 
-![overview](/Users/masato/Documents/Research/pipeline_prep/overview.png)
+![overview](./overview.png)
 
 Roughly speaking, this pipleline 
 
 1. takes webm files with responses from PCIbex 
 2. transforms it into wav files (wav2webm)
-
-3. gets onset data from Chronset (citation)
-
-4. gets automatic transcription from Google Cloud Speech-to-Text API (documentation)
-
-5. combines the information + context/probe info of the experiment
+3. gets onset data from [Chronset](https://www.bcbl.eu/databases/chronset/)
+4. gets automatic transcription from [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text)
+5. combines the information + context/probe info of the experiment and output them as Praat TextGrids
+6. facilitate human inspection by (CheckAndEdit)
 
 
 
@@ -35,39 +33,35 @@ Output:
 
 
 
+
+
+Note: This pipeline is built for OSX. Might need some modification for Windows and LINUX.
+
+
+
+# List of contents
+
+- transcribe.ipynb: the main script for transcription
+- webm2wav: transform webm files into wav files (using ffmpeg)
+- stereo2monaural.ipynb: make stereo wav files into monaural files that can be handled by Google Cloud Speech to Text
+- chronset_prep.ipynb: create Chronset-uploadable zip files
+- keywords.ipynb: create and manage keyword lists for cloze data
+- check_transcription.ipynb: post-hoc correction of automatic transcription before human inspection
+- CheckAndEdit: Praat script that open the wav files and textgrid files with the same name
+- analyze_textgrid.ipynb: create csv files from a set of textgrid files with onsets and transcriptions
+
+
+
+* temp_note.TextGrid: A template of textgrid files used in transcribe.ipynb
+
 # Preperation
 
 ## Data
 
 - A directory containing webm files
+  File names must end with: \[item_condition\]\[condition\]_\[participant_id\] (e.g. exp_10a_tdlf.webm)
 
-
-
-File names must end with: \[item_condition\]\[condition\]_\[participant_id\] (e.g. exp_10a_tdlf.webm)
-
-
-
-## Environment
-
-Requirements:
-
-Core:
-
-python ver
-
-numpy
-
-pandas
-
-pickle
-
-pydub
-
-- 
-
-
-
-This pipeline is built for OSX. Might need some modification for Windows and LINUX.
+* Optional: Experimental item info in the form of python dictionary ({filenames:info})
 
 
 
@@ -104,11 +98,7 @@ NOTE: All the wav files below the input directry will be generated directly in t
 
 # transcribe.ipynb
 
-This script generates NLP-powered transcriptions of audio files and ouput TextGrid files with transcriptions. See transcribe.ipynb for details
-
-
-
-
+This script generates NLP-powered transcriptions of audio files and ouput TextGrid files with transcriptions. See transcribe.ipynb for details.
 
 
 
@@ -122,8 +112,6 @@ This Praat script:
 
 
 Simply enter the path to the wav files and textgrids to the box, and then the corresponding files are opened at once.
-
-
 
 Be careful that the script overwrites the TextGrid file once you click on "continue"
 
