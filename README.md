@@ -6,7 +6,7 @@ This pipline facilitates automatic processing of auditory data, especially the c
 2. responses are typically short (mostly a single word)
 3. latency of the production is valuable data
 
-However, it could be used for processing of other kinds of data.
+However, it could be used to process other kinds of data.
 
 ![overview](./overview.png)
 
